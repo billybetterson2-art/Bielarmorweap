@@ -1,4 +1,4 @@
-.name: Build bielarmorweap
+name: Build bielarmorweap
 on: [workflow_dispatch]
 
 jobs:
