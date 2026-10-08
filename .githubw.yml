@@ -1,0 +1,29 @@
+name: Build bielarmorweap
+on: [workflow_dispatch]
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+    - uses: actions/checkout@v4
+    
+    - name: Extract 7z source files
+      run: 7z x -y *.7z
+        
+    - name: Set up JDK 8
+      uses: actions/setup-java@v4
+      with:
+        java-version: '8'
+        distribution: 'temurin'
+        
+    - name: Grant execute permission for gradlew
+      run: chmod +x gradlew
+      
+    - name: Build Minecraft Java 1.12.2 Mod
+      run: ./gradlew build --no-daemon
+      
+    - name: Upload compiled JAR artifact
+      uses: actions/upload-artifact@v4
+      with:
+        name: bielarmorweap-1.0.0-1.12.2-jar
+        path: build/libs/*.jar
